@@ -1,8 +1,11 @@
 import { UserModel } from "@/model/User";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+import { dbConnect } from "@/lib/dbConnect";
 
 export async function POST(request: Request) {
+  await dbConnect();
+
   try {
     const { username, email, password } = await request.json();
 
@@ -49,18 +52,18 @@ export async function POST(request: Request) {
         await existingUserByEmail.save();
       }
 
-      return Response.json(
-        {
-          success: false,
-          message: "User with this email already exists",
-        },
-        {
-          status: 400,
-        }
-      );
+      // return Response.json(
+      //   {
+      //     success: false,
+      //     message: "User with this email already exists",
+      //   },
+      //   {
+      //     status: 400,
+      //   }
+      // );
       //
     } else {
-      const hashedPassword = bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       const expiryDate = new Date();
       expiryDate.setHours(expiryDate.getHours() + 1);
