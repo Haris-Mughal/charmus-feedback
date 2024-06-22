@@ -52,16 +52,15 @@ export async function POST(request: Request) {
         await existingUserByEmail.save();
       }
 
-      // return Response.json(
-      //   {
-      //     success: false,
-      //     message: "User with this email already exists",
-      //   },
-      //   {
-      //     status: 400,
-      //   }
-      // );
-      //
+      return Response.json(
+        {
+          success: false,
+          message: "User with this email already exists",
+        },
+        {
+          status: 400,
+        }
+      );
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
 
