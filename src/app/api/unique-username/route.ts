@@ -62,7 +62,7 @@ export async function GET(request: Request) {
         message: "Username available",
       },
       {
-        status: 201,
+        status: 200,
       }
     );
   } catch (error) {
