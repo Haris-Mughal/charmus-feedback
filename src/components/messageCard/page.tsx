@@ -29,7 +29,7 @@ type Message = {
 };
 
 type MessageCardProps = {
-  message: { _id: string };
+  message: Message;
   onMessageDelete: (messageId: string) => void;
 };
 
