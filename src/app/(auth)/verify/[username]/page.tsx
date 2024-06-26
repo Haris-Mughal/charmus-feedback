@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/hook/use-toast";
 import { verifySchema } from "@/schemas/verifySchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,7 +34,7 @@ const VerifyAccount = () => {
     try {
       const response = await axios.post<ApiResponse>(`/api/verify-code`, {
         username: params.username,
-        code: data.Code,
+        code: data.code,
       });
       toast({
         title: "Success",
@@ -67,7 +67,7 @@ const VerifyAccount = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="Code"
+              name="code"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>verification Code</FormLabel>

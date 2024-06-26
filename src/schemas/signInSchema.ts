@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const SignUpSchema = z.object({
-  identifier: z.string(),
+export const SignInSchema = z.object({
+  identifier: z.string(), // because it holds both email and username
   password: z.string(),
 });

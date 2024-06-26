@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useDebounceCallback } from "usehooks-ts";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/hook/use-toast";
 import { useRouter } from "next/navigation";
 import { SignUpSchema } from "@/schemas/signUpSchema";
 import axios, { AxiosError } from "axios";
@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import {
+  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -77,7 +78,7 @@ const Page = () => {
         duration: 3000,
       });
 
-      router.replace(`/verify-code/${data.username}`);
+      router.replace(`/verify/${username}`);
       setIsSubmitting(false);
     } catch (error) {
       console.error("Signup failed", error);
@@ -94,14 +95,14 @@ const Page = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-2">
             Join Charmus Message
           </h1>
           <p className="my-4">Sign up to start your anonymous adventure</p>
         </div>
-        <FormProvider {...form}>
+        <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
@@ -177,7 +178,7 @@ const Page = () => {
               )}
             </Button>
           </form>
-        </FormProvider>
+        </Form>
         <div className="text-center mt-4">
           <p>
             Already have an account?{" "}
