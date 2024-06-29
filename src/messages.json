@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Message from Charmus Admin",
+        "content": "Hey, What's going on today?",
+        "received": "10 minutes ago"
+    },
+    {
+        "title": "Message from guest",
+        "content": "I really like your recent post.",
+        "received": "2 hours ago"
+    },
+    {
+        "title": "Message from another admin",
+        "content": "I'm excited about the new features coming up.",
+        "received": "4 days ago"
+    }
+]
