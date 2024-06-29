@@ -119,7 +119,15 @@ const Dashboard = () => {
     }
   };
 
-  const { username } = session?.user;
+  if (!session || !session.user) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-4xl font-semibold">Please Sign in</div>
+      </div>
+    );
+  }
+
+  const { username } = session.user;
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
   const profileUrl = `${baseUrl}/m/${username}`;
 
@@ -130,10 +138,6 @@ const Dashboard = () => {
       description: "Profile has been copied to clipboard",
     });
   };
-
-  if (!session || !session.user) {
-    return <div>Please Sign in</div>;
-  }
 
   return (
     <div className="my-8 mx-4 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
@@ -188,7 +192,9 @@ const Dashboard = () => {
             />
           ))
         ) : (
-          <p>No any message to display.</p>
+          <p className="font-semibold text-xl text-gray-800">
+            No any message to display.
+          </p>
         )}
       </div>
     </div>
