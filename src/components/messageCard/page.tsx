@@ -23,10 +23,11 @@ import { X } from "lucide-react";
 import { useToast } from "../hook/use-toast";
 import axios from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
+import { Message } from "@/model/User";
 
-type Message = {
-  _id: string;
-};
+// type Message = {
+//   _id: string;
+// };
 
 type MessageCardProps = {
   message: Message;
