@@ -84,7 +84,7 @@ export default function SignUp() {
       console.error("Signup failed", error);
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage = axiosError.response?.data.message;
-      ("There was a problem with your sign-up. Please try again.");
+      ("There was a problem with your sign up. Please try again.");
       toast({
         title: "Sign up Failed",
         description: errorMessage,
