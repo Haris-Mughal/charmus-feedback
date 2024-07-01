@@ -48,7 +48,7 @@ export default function VerificationEmail({
         <Row>{<Text>{otp}</Text>}</Row>
         <Row>
           <Text>
-            If you didn&apos;t request this code please ignore this email.
+            If you don&apos;t request this code please ignore this email.
           </Text>
         </Row>
       </Section>
