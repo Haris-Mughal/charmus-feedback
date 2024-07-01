@@ -1,25 +1,14 @@
 import Navbar from "@/components/navbar/page";
-import type { Metadata } from "next";
-import { Inter, M_PLUS_1_Code } from "next/font/google";
 
-const inter = M_PLUS_1_Code({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Charmus Message",
-  description: "Message App",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      {children}
+    </div>
   );
 }

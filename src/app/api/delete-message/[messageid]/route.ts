@@ -1,19 +1,19 @@
-import { getServerSession, User } from "next-auth";
+import { User } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { dbConnect } from "@/lib/dbConnect";
-import { UserModel } from "@/model/User";
-import mongoose from "mongoose";
+import dbConnect from "@/lib/dbConnect";
+import UserModel from "@/model/User";
 
 export async function DELETE(
   request: Request,
-  { params }: { messageid: string }
+  { params }: { params: { messageid: string } }
 ) {
   const messageId = params.messageid;
   await dbConnect();
 
   const session = await getServerSession(authOptions);
 
-  const user: User = session?.user;
+  const _user: User = session?.user;
   //   const user: User = session?.user as User
 
   if (!session || !session.user) {
@@ -23,22 +23,22 @@ export async function DELETE(
         message: "User not authenticated",
       },
       {
-        status: 500,
+        status: 401,
       }
     );
   }
 
   try {
     const updatedUResult = await UserModel.updateOne(
-      { _id: user._id },
+      { _id: _user._id },
       { $pull: { messages: { _id: messageId } } }
     );
 
-    if (updatedUResult.modifiedCount == 0) {
+    if (updatedUResult.modifiedCount === 0) {
       return Response.json(
         {
           success: false,
-          message: "Message not found or Already deleted",
+          message: "Message not found or already deleted",
         },
         {
           status: 404,

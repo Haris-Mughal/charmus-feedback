@@ -68,6 +68,8 @@ const UserSchema: Schema<User> = new Schema({
   messages: [MessageSchema],
 });
 
-export const UserModel =
+const UserModel =
   (mongoose.models.User as mongoose.Model<User>) || // inCase of already existing
   mongoose.model<User>("User", UserSchema); // inCase of newly created
+
+export default UserModel;

@@ -1,5 +1,5 @@
-import { dbConnect } from "@/lib/dbConnect";
-import { UserModel } from "@/model/User";
+import dbConnect from "@/lib/dbConnect";
+import UserModel from "@/model/User";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
           message: "User not found",
         },
         {
-          status: 500,
+          status: 404,
         }
       );
     }

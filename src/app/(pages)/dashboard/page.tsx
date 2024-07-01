@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/hook/use-toast";
 import { Message } from "@/model/User";
@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Loader2, RefreshCcw } from "lucide-react";
 import MessageCard from "@/components/messageCard/page";
 
-const Dashboard = () => {
+function UserDashboard() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
@@ -47,7 +47,8 @@ const Dashboard = () => {
       toast({
         title: "Error",
         description:
-          axiosError.response?.data.message || "Failed fetch messages",
+          axiosError.response?.data.message ??
+          "Failed to fetch message settings",
         variant: "destructive",
       });
     } finally {
@@ -58,7 +59,7 @@ const Dashboard = () => {
   const fetchMessages = useCallback(
     async (refresh: boolean = false) => {
       setIsLoading(true);
-      setIsSwitchLoading(true);
+      setIsSwitchLoading(false);
 
       try {
         const response = await axios.get<ApiResponse>("/api/get-messages");
@@ -69,9 +70,10 @@ const Dashboard = () => {
 
         if (refresh) {
           toast({
-            title: "Refreshed Messages",
+            title: "Messages Refreshed",
             description: "Showing latest messages",
             variant: "default",
+            duration: 3000,
           });
         }
       } catch (error) {
@@ -79,7 +81,7 @@ const Dashboard = () => {
         toast({
           title: "Error",
           description:
-            axiosError.response?.data.message || "Failed fetch messages",
+            axiosError.response?.data.message ?? "Failed to fetch messages",
           variant: "destructive",
         });
       } finally {
@@ -95,7 +97,7 @@ const Dashboard = () => {
 
     fetchMessages();
     fetchAcceptMessage();
-  }, [session, setValue, fetchAcceptMessage, fetchMessages]);
+  }, [session, setValue, fetchAcceptMessage, fetchMessages, toast]);
 
   const handleSwitchChange = async () => {
     try {
@@ -113,18 +115,15 @@ const Dashboard = () => {
       toast({
         title: "Error",
         description:
-          axiosError.response?.data.message || "Failed fetch messages",
+          axiosError.response?.data.message ??
+          "Failed to update message settings",
         variant: "destructive",
       });
     }
   };
 
   if (!session || !session.user) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-4xl font-semibold">Please Sign in</div>
-      </div>
-    );
+    return <div></div>;
   }
 
   const { username } = session.user;
@@ -134,8 +133,8 @@ const Dashboard = () => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
     toast({
-      title: "URL copied",
-      description: "Profile has been copied to clipboard",
+      title: "URL Copied!",
+      description: "Profile URL has been copied to clipboard.",
     });
   };
 
@@ -199,6 +198,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Dashboard;
+export default UserDashboard;

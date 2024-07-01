@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useToast } from "@/components/hook/use-toast";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import {
+  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -44,7 +45,7 @@ const SignIn = () => {
       });
 
       if (result?.error) {
-        if (result.error == "CredentialSignin") {
+        if (result.error == "CredentialsSignin") {
           toast({
             title: "Sign in failed",
             description: "Incorrect email or password",
@@ -75,15 +76,15 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-800">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-2">
-            Join Charmus Message
+          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+            Welcome Back to Charmus Feedback
           </h1>
-          <p className="my-4">Sign in to start your anonymous adventure</p>
+          <p className="mb-4">Sign in to continue your secret conversations</p>
         </div>
-        <FormProvider {...form}>
+        <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
@@ -128,22 +129,11 @@ const SignIn = () => {
               )}
             </Button>
           </form>
-        </FormProvider>
-        <div className="text-center mt-4">
-          <p>
-            Isn&apos;t account verified?{" "}
-            <Link
-              href={`/verify/haris`} //TODO: manage it later
-              className="text-blue-600 hover:text-blue-800"
-            >
-              Verify Account
-            </Link>
-          </p>
-        </div>
+        </Form>
         <div className="text-center mt-4">
           <p>
             Didn&apos;t have an account?{" "}
-            <Link href="/signup" className="text-blue-600 hover:text-blue-800">
+            <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
               Sign up
             </Link>
           </p>

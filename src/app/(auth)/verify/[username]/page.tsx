@@ -36,19 +36,20 @@ const VerifyAccount = () => {
         username: params.username,
         code: data.code,
       });
+
       toast({
         title: "Success",
         description: response.data.message,
       });
 
-      router.replace(`/signin`);
+      router.replace("/sign-in");
     } catch (error) {
-      console.error("Signup failed", error);
       const axiosError = error as AxiosError<ApiResponse>;
-      let errorMessage = axiosError.response?.data.message;
       toast({
-        title: "Signup failed",
-        description: errorMessage,
+        title: "Verification Failed",
+        description:
+          axiosError.response?.data.message ??
+          "An error occurred. Please try again.",
         variant: "destructive",
       });
     }

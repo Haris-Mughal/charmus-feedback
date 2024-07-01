@@ -9,9 +9,9 @@ export async function sendVerificationEmail(
 ): Promise<ApiResponse> {
   try {
     await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "harismirza3456@gmail.com", //TODO: have to change it
       to: email,
-      subject: "Next App | Verification code",
+      subject: "Charmus Feedback Verification code",
       react: VerificationEmail({ username, otp: verifyCode }),
     });
 

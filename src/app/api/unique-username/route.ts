@@ -1,5 +1,5 @@
-import { dbConnect } from "@/lib/dbConnect";
-import { UserModel } from "@/model/User";
+import dbConnect from "@/lib/dbConnect";
+import UserModel from "@/model/User";
 import { usernameValidation } from "@/schemas/signUpSchema";
 import { z } from "zod";
 
@@ -17,8 +17,6 @@ export async function GET(request: Request) {
     };
 
     const result = usernameQuerySchema.safeParse(queryParam);
-
-    // console.log("*---- Result: ", result);
 
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors || [];
@@ -65,8 +63,8 @@ export async function GET(request: Request) {
         status: 200,
       }
     );
-  } catch (error) {
-    console.error("*---- Error checking username", error);
+  } catch (err) {
+    console.error("*---- Error checking username", err);
 
     return Response.json(
       {

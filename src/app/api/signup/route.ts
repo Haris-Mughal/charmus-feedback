@@ -1,7 +1,7 @@
-import { UserModel } from "@/model/User";
+import UserModel from "@/model/User";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
-import { dbConnect } from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       email,
     });
 
-    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+    let verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
     if (existingUserByEmail) {
       if (existingUserByEmail.isVerified) {
@@ -51,16 +51,6 @@ export async function POST(request: Request) {
 
         await existingUserByEmail.save();
       }
-
-      return Response.json(
-        {
-          success: false,
-          message: "User with this email already exists",
-        },
-        {
-          status: 400,
-        }
-      );
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -109,7 +99,7 @@ export async function POST(request: Request) {
       }
     );
   } catch (err) {
-    console.error("*---- Error while SignUp user ----*");
+    console.error("*---- Error while SignUp user ----*", err);
 
     return Response.json(
       {

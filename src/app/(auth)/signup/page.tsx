@@ -23,7 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-const Page = () => {
+export default function SignUp() {
   const [username, setUsername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
@@ -84,8 +84,9 @@ const Page = () => {
       console.error("Signup failed", error);
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage = axiosError.response?.data.message;
+      ("There was a problem with your sign-up. Please try again.");
       toast({
-        title: "Signup failed",
+        title: "Sign up Failed",
         description: errorMessage,
         variant: "destructive",
       });
@@ -98,7 +99,7 @@ const Page = () => {
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-2">
-            Join Charmus Message
+            Join Charmus Feedback
           </h1>
           <p className="my-4">Sign up to start your anonymous adventure</p>
         </div>
@@ -113,7 +114,7 @@ const Page = () => {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="username"
+                      placeholder="Username"
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
@@ -142,10 +143,10 @@ const Page = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="email" {...field} />
+                    <Input type="email" placeholder="Email" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    Your email should look like `email@gmail.com`.
+                  <FormDescription className="text-muted text-gray-400 text-sm">
+                    We will send you a verification code.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -158,7 +159,7 @@ const Page = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="password" {...field} />
+                    <Input type="password" placeholder="Password" {...field} />
                   </FormControl>
                   <FormDescription>
                     Your password should be at least 6 characters.
@@ -190,6 +191,4 @@ const Page = () => {
       </div>
     </div>
   );
-};
-
-export default Page;
+}
